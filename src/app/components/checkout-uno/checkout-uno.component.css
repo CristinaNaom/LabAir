@@ -1,0 +1,19 @@
+input{
+    padding: 1em;
+}
+.is-invalid {
+    border-color: #dc3545;
+  }
+  .invalid-feedback {
+    display: block;
+    color: #dc3545;
+  }
+  label{
+    padding-left: 0.5em;
+  }
+  .form-check{
+    font-size: 1.2em;
+  }
+  .col, .col-6{
+    padding:0 0;
+  }

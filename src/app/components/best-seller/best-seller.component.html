@@ -1,0 +1,29 @@
+<div class="container my-5">
+  <!-- Titolo centrato e stilizzato -->
+  <h3 class="my-5 bg-dark text-white text-center py-3">Best Seller</h3>
+
+  <!-- Row con le colonne responsive -->
+  <div class="row">
+    <!-- Colonna per ogni prodotto, con classi Bootstrap responsive -->
+    <div
+      class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4"
+      *ngFor="let prodotto of prodotti"
+    >
+      <div class="card h-100" [routerLink]="['/prodottoDetail', prodotto.id]">
+        <!-- Immagine del prodotto -->
+        <img
+          [src]="prodotto.immagine"
+          class="card-img-top img-fluid"
+          alt="{{ prodotto.nome }}"
+        />
+        <!-- Corpo della card con titolo e prezzo -->
+        <div class="card-body">
+          <h5 class="card-title">{{ prodotto.nome }}</h5>
+          <p class="card-text">
+            <strong>Prezzo: {{ prodotto.prezzo | currency : "EUR" }}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

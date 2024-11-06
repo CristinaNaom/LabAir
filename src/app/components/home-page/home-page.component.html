@@ -1,0 +1,63 @@
+<div class="container mt-5">
+  <!-- Card Banner -->
+  <div class="card text-center border-0">
+    <img
+      src="assets/image/homePage/banner1.webp"
+      class="card-img"
+      alt="..."
+      style="height: 300px; object-fit: cover; width: 100%"
+    />
+    <div
+      class="card-img-overlay d-flex flex-column justify-content-center align-items-center text-white"
+    >
+      <h1 class="card-title display-1" style="font-size: calc(2rem + 2vw)">
+        Il nostro momento
+      </h1>
+      <h6 class="card-subtitle my-2">
+        La storia non si fa da sola, la scriviamo insieme
+      </h6>
+      <a routerLink="/prodottiTot" class="btn btn-dark btn-lg my-4">
+        Cominciamo
+      </a>
+    </div>
+  </div>
+
+  <!-- Trend della settimana -->
+  <div class="mt-5">
+    <h3 class="mb-2">Trend della settimana</h3>
+    <app-slider
+      sliderId="slider1"
+      [images]="images3"
+      class="container my-2"
+    ></app-slider>
+    <a href="" class="btn btn-dark btn-lg my-2" routerLink="/bestSeller">
+      Vai ai best-seller
+    </a>
+  </div>
+
+  <!-- Acquista per sport -->
+  <div class="mt-5">
+    <h3 class="mb-2">Acquista per sport</h3>
+    <app-slider
+      sliderId="slider2"
+      [images]="images"
+      class="container my-2"
+    ></app-slider>
+    <a class="btn btn-dark btn-lg my-2" routerLink="/tuttiSport">
+      Scopri lo sport
+    </a>
+  </div>
+
+  <!-- Scopri di più -->
+  <div class="mt-5">
+    <h3 class="mb-4">Scopri di più</h3>
+    <app-slider
+      sliderId="slider3"
+      [images]="images2"
+      class="container my-2"
+    ></app-slider>
+    <a class="btn btn-dark btn-lg my-2" routerLink="/nuoviArrivi">
+      Nuovi arrivi
+    </a>
+  </div>
+</div>

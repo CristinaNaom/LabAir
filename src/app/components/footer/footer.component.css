@@ -1,0 +1,23 @@
+td {
+  color: grey;
+  cursor: pointer;
+}
+/* Nascondi la tabella sui dispositivi piccoli */
+@media (max-width: 767.98px) {
+  .responsive-table {
+    display: none;
+  }
+  .dropdown-section {
+    display: block;
+  }
+}
+
+/* Nascondi i dropdown su dispositivi medi e grandi */
+@media (min-width: 768px) {
+  .responsive-table {
+    display: table;
+  }
+  .dropdown-section {
+    display: none;
+  }
+}

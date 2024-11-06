@@ -1,0 +1,169 @@
+<div class="container my-4">
+  <h2 class="text-center mb-5"></h2>
+  <div class="row">
+    <div class="col-lg-8">
+      <div *ngIf="!isVisibile">
+        <form [formGroup]="frmConsegna" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input
+                type="text"
+                id="nome"
+                autocomplete="off"
+                formControlName="nome"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': nome?.touched && nome?.invalid }"
+              />
+              <div
+                *ngIf="nome?.touched && nome?.invalid"
+                class="invalid-feedback"
+              >
+                Nome è richiesto.
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <label for="cognome" class="form-label">Cognome</label>
+              <input
+                type="text"
+                id="cognome"
+                autocomplete="off"
+                formControlName="cognome"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': cognome?.touched && cognome?.invalid
+                }"
+              />
+              <div
+                *ngIf="cognome?.touched && cognome?.invalid"
+                class="invalid-feedback"
+              >
+                Cognome è richiesto.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="indirizzo" class="form-label">Indirizzo</label>
+            <input
+              type="text"
+              id="indirizzo"
+              autocomplete="off"
+              formControlName="indirizzo"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': indirizzo?.touched && indirizzo?.invalid
+              }"
+            />
+            <div
+              *ngIf="indirizzo?.touched && indirizzo?.invalid"
+              class="invalid-feedback"
+            >
+              Indirizzo è richiesto.
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+              <label for="telefono" class="form-label">Telefono</label>
+              <input
+                type="tel"
+                id="telefono"
+                autocomplete="off"
+                formControlName="telefono"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': telefono?.touched && telefono?.invalid
+                }"
+              />
+              <div
+                *ngIf="telefono?.touched && telefono?.invalid"
+                class="invalid-feedback"
+              >
+                <div *ngIf="telefono?.errors?.['required']">
+                  Telefono è richiesto.
+                </div>
+                <div *ngIf="telefono?.errors?.['pattern']">
+                  Telefono non è valido.
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="email"
+                autocomplete="off"
+                formControlName="email"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': email?.touched && email?.invalid }"
+              />
+              <div
+                *ngIf="email?.touched && email?.invalid"
+                class="invalid-feedback"
+              >
+                <div *ngIf="email?.errors?.['required']">
+                  Email è richiesta.
+                </div>
+                <div *ngIf="email?.errors?.['email']">Email non è valida.</div>
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-dark my-4"
+            [disabled]="frmConsegna.invalid"
+          >
+            Salva e continua
+          </button>
+        </form>
+      </div>
+
+      <!-- Riepilogo dati -->
+      <div *ngIf="isVisibile" class="mb-5 mt-3">
+        <h5 style="text-decoration: underline">Riepilogo dei dati</h5>
+        <p><strong>Nome:</strong> {{ datiForm?.nome }}</p>
+        <p><strong>Cognome:</strong> {{ datiForm?.cognome }}</p>
+        <p><strong>Indirizzo:</strong> {{ datiForm?.indirizzo }}</p>
+        <p><strong>Email:</strong> {{ datiForm?.email }}</p>
+        <p><strong>Telefono:</strong> {{ datiForm?.telefono }}</p>
+      </div>
+      <div class="text-center my-4">
+        <button
+          type="submit"
+          class="btn btn-dark"
+          routerLink="/pagamento"
+          [disabled]="!isVisibile"
+        >
+          Vai al pagamento
+        </button>
+      </div>
+    </div>
+
+    <!-- Riepilogo carrello -->
+    <div class="col-lg-4">
+      <h4 class="mb-3">Nel carrello</h4>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of prodottiACarrello">
+          <div class="d-flex align-items-center">
+            <img
+              [src]="item.prodotto.immagine"
+              class="img-fluid"
+              style="width: 100px; height: 100px"
+            />
+            <div class="ms-3 text-center">
+              <h5>{{ item.prodotto.nome }}</h5>
+              <p>Taglia: {{ item.taglia }}</p>
+              <p>Colore: {{ item.colore }}</p>
+              <p>Prezzo: {{ item.prodotto.prezzo | currency : "EUR" }}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="my-3">
+        <p>Subtotale: {{ totale | currency : "EUR" }}</p>
+        <p>Costi di spedizione: {{ spedizione | currency : "EUR" }}</p>
+        <hr />
+        <p>Totale: {{ totale + spedizione | currency : "EUR" }}</p>
+      </div>
+    </div>
+  </div>
+</div>

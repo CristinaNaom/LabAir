@@ -1,0 +1,135 @@
+<div class="container my-5">
+  <h3 class="my-5 bg-dark text-white text-center py-3">Prodotti in vendita</h3>
+  <div class="d-flex flex-column flex-md-row justify-content-between">
+    <!-- Colonna sinistra per i filtri -->
+    <div class="p-2 flex-shrink-1" style="max-width: 250px">
+      <!-- Dropdown per le Categorie -->
+      <div class="dropdown">
+        <p
+          class="mt-5 mb-3 fw-bold dropdown-toggle"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Categorie
+        </p>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li *ngFor="let categoria of categorie">
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="
+                filtraPerCategorie(categoria.categoria); $event.preventDefault()
+              "
+            >
+              {{ categoria.title }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Dropdown per i Colori Disponibili -->
+      <div class="dropdown">
+        <p
+          class="mt-5 mb-3 fw-bold dropdown-toggle"
+          id="dropdownMenuButton2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Colori disponibili
+        </p>
+        <ul
+          class="dropdown-menu"
+          aria-labelledby="dropdownMenuButton2"
+          style="max-height: 200px; overflow-y: auto"
+        >
+          <li *ngFor="let colore of colori">
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="filtraPerColore(colore); $event.preventDefault()"
+            >
+              {{ colore }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Dropdown per il Prezzo -->
+      <div class="dropdown">
+        <p
+          class="mt-5 mb-3 fw-bold dropdown-toggle"
+          id="dropdownMenuButton3"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Prezzo
+        </p>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="filtraPerPrezzo('inferioreA50'); $event.preventDefault()"
+            >
+              Inferiore a 50€
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="filtraPerPrezzo('tra50e100'); $event.preventDefault()"
+            >
+              Tra 50€ e 100€
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="filtraPerPrezzo('tra100e150'); $event.preventDefault()"
+            >
+              Tra 100€ e 150€
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              href="#"
+              (click)="
+                filtraPerPrezzo('maggioriDi150'); $event.preventDefault()
+              "
+            >
+              Superiore a 150€
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Colonna destra per i prodotti in vendita -->
+    <div class="flex-grow-1">
+      <div class="row g-3">
+        <div
+          class="col-lg-4 col-md-6 mb-4"
+          *ngFor="let prodotto of prodottiFiltrati"
+        >
+          <div class="card h-100">
+            <img
+              [routerLink]="['/prodottoDetail', prodotto.id]"
+              [src]="'http://localhost:3000' + prodotto.immagine"
+              [alt]="prodotto.nome"
+              class="card-img-top img-fluid"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ prodotto.nome }}</h5>
+              <p class="card-text">
+                Prezzo: {{ prodotto.prezzo | currency : "EUR" }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

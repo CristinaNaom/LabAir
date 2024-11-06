@@ -1,0 +1,60 @@
+li, img {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  text-decoration: underline;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa; /* Cambia colore di sfondo al passaggio del mouse */
+}
+
+.nav-link {
+  color: black;
+}
+
+.card {
+  border: 1px solid #ced4da; /* Colore del bordo */
+  border-radius: 0.25rem; /* Angoli arrotondati */
+  background-color: white; /* Colore di sfondo per la card */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Leggera ombra per la card */
+}
+
+.card a {
+  display: block; /* Rende l'intera area del link cliccabile */
+  padding: 0.5rem 1rem; /* Padding interno */
+  color: black; /* Colore del testo */
+}
+
+.card a:hover {
+  background-color: #f8f9fa; /* Colore di sfondo al passaggio del mouse */
+}
+
+.card .p-2 {
+  padding: 0.5rem; /* Aggiunta di padding per gli elementi all'interno della card */
+}
+
+/* Media Queries per gestire il layout responsivo */
+@media (max-width: 768px) {
+  .navbar-nav {
+    display: flex; /* Utilizza flexbox per il layout */
+    justify-content: center; /* Centra gli elementi orizzontalmente */
+    flex-wrap: nowrap; /* Mantiene gli elementi sulla stessa riga */
+    margin-top: 10px; /* Spaziatura sopra per separare dal resto della navbar */
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 10px; /* Spaziatura laterale tra gli elementi */
+  }
+
+  /* Allinea carrello, preferiti e profilo orizzontalmente */
+  .carrello-item, .preferiti-item, .profilo-item {
+    display: inline-block; /* Imposta come inline-block per allineare in orizzontale */
+    margin-left: 10px; /* Margine sinistro per spaziatura */
+  }
+}

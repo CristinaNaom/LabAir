@@ -1,0 +1,134 @@
+<div class="container mt-5">
+  <!-- Messaggio di successo -->
+  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    {{ successMessage }}
+  </div>
+
+  <!-- Messaggio di errore -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+    <h3>Registrazione</h3>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="firstName" class="form-label">Nome</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          ngModel
+          required
+          class="form-control"
+          placeholder="Inserisci il nome"
+        />
+        <div *ngIf="form.controls['firstName']?.invalid && form.controls['firstName']?.touched" class="text-danger">
+          Il nome è obbligatorio.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="lastName" class="form-label">Cognome</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          ngModel
+          required
+          class="form-control"
+          placeholder="Inserisci il cognome"
+        />
+        <div *ngIf="form.controls['lastName']?.invalid && form.controls['lastName']?.touched" class="text-danger">
+          Il cognome è obbligatorio.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="address" class="form-label">Indirizzo</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          ngModel
+          required
+          pattern="^[a-zA-Z0-9\s.,'-]+$"
+          class="form-control"
+          placeholder="Inserisci l'indirizzo"
+        />
+        <div *ngIf="form.controls['address']?.invalid && form.controls['address']?.touched" class="text-danger">
+          L'indirizzo è obbligatorio.
+        </div>
+      </div>
+      
+      <div class="col-md-6 mb-3">
+        <label for="phone" class="form-label">Telefono</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          ngModel
+          required
+          class="form-control"
+          placeholder="Inserisci il telefono"
+          pattern="[0-9]{10}"  
+        />
+        <div *ngIf="form.controls['phone']?.invalid && form.controls['phone']?.touched" class="text-danger">
+          Il numero di telefono deve essere composto da 10 cifre.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          ngModel
+          required
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+          class="form-control"
+          placeholder="Inserisci l'email"
+        />
+        <div *ngIf="form.controls['email']?.invalid && form.controls['email']?.touched" class="text-danger">
+          L'email è obbligatoria e deve essere valida.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          ngModel
+          required
+          class="form-control"
+          placeholder="Inserisci la password"
+          minlength="6" 
+        />
+        <div *ngIf="form.controls['password']?.invalid && form.controls['password']?.touched"  class="text-danger">
+          La password è obbligatoria e deve contenere almeno 6 caratteri.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <button
+          type="submit"
+          class="btn btn-dark w-100"
+          [disabled]="!form.valid"
+        >
+          Registrati
+        </button>
+      </div>
+      <div class="col-12 mt-2">
+        <a routerLink="/login" class="btn btn-link" style="color: black;">Hai già un account? Accedi</a>
+      </div>
+    </div>
+  </form>
+</div>

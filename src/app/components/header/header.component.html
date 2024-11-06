@@ -1,0 +1,200 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <!-- Navbar Toggler per dispositivi mobili -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Collapse -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav w-100 justify-content-around">
+        <!-- Home -->
+         <li class="nav-item">
+          <img
+          src="assets/image/logo.png"
+          class="img-fluid"
+          alt="logo"
+          style="max-width: 90px; max-height: 90px;"
+          routerLink=""
+        />
+         </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/prodottiTot">Acquista</a>
+        </li>
+
+        <!-- Dropdown Donna -->
+        <li
+          class="nav-item dropdown"
+          (mouseenter)="isDropdownDonnaOpen = true"
+          (mouseleave)="isDropdownDonnaOpen = false"
+        >
+          <a
+            class="nav-link"
+            id="navbarDropdownDonna"
+            role="button"
+            aria-expanded="isDropdownDonnaOpen"
+          >
+            Donna
+          </a>
+          <ul
+            class="dropdown-menu"
+            [ngClass]="{ show: isDropdownDonnaOpen }"
+            aria-labelledby="navbarDropdownDonna"
+          >
+            <li>
+              <a class="dropdown-item" routerLink="/bestSeller">Best-seller</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/nuoviArrivi"
+                >Nuovi arrivi</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/tuttiSport">Sport</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Dropdown Uomo -->
+        <li
+          class="nav-item dropdown"
+          (mouseenter)="isDropdownUomoOpen = true"
+          (mouseleave)="isDropdownUomoOpen = false"
+        >
+          <a
+            class="nav-link"
+            id="navbarDropdownUomo"
+            role="button"
+            aria-expanded="isDropdownUomoOpen"
+          >
+            Uomo
+          </a>
+          <ul
+            class="dropdown-menu"
+            [ngClass]="{ show: isDropdownUomoOpen }"
+            aria-labelledby="navbarDropdownUomo"
+          >
+            <li>
+              <a class="dropdown-item" routerLink="/bestSeller">Best-seller</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/nuoviArrivi"
+                >Nuovi arrivi</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/tuttiSport">Sport</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Dropdown Kids -->
+        <li
+          class="nav-item dropdown"
+          (mouseenter)="isDropdownKidsOpen = true"
+          (mouseleave)="isDropdownKidsOpen = false"
+        >
+          <a
+            class="nav-link"
+            id="navbarDropdownKids"
+            role="button"
+            aria-expanded="isDropdownKidsOpen"
+          >
+            Kids
+          </a>
+          <ul
+            class="dropdown-menu"
+            [ngClass]="{ show: isDropdownKidsOpen }"
+            aria-labelledby="navbarDropdownKids"
+          >
+            <li>
+              <a class="dropdown-item" routerLink="/bestSeller">Best-seller</a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/nuoviArrivi"
+                >Nuovi arrivi</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/tuttiSport">Sport</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Search Bar -->
+        <li class="nav-item">
+          <div class="input-group">
+            <input
+              [formControl]="searchControl"
+              placeholder="Cerca scarpa..."
+              id="cerca"
+              type="search"
+              class="form-control"
+              aria-label="Search"
+            />
+            <span class="input-group-text" id="basic-addon1">
+              <i class="bi bi-search"></i>
+            </span>
+          </div>
+
+          <div class="card mt-1" style="max-height: 200px; overflow-y: auto" *ngIf="searchControl.value">
+            <ng-container *ngIf="prodotti$ | async as prodotti">
+              <div *ngIf="prodotti.length > 0">
+                <div *ngFor="let prodotto of prodotti" class="p-2">
+                  <a class="link-dark link-underline link-underline-opacity-0" [routerLink]="['/prodottoDetail', prodotto.id]">
+                    {{ prodotto.nome }}
+                  </a>
+                </div>
+              </div>
+              <ng-template #noResults>
+                <div *ngIf="searchControl.value">
+                  No results found.
+                </div>
+              </ng-template>
+            </ng-container>
+          </div>
+        </li>
+
+        <!-- Carrello -->
+        <li class="nav-item carrello-item">
+          <i
+            class="bi bi-bag"
+            (click)="openModal()"
+            style="font-size: 1.5rem"
+          ></i>
+          <app-carello-mini
+            [isVisible]="isModalVisible"
+            (closeModalEvent)="handleCloseModal()"
+          >
+            <h2>Il tuo carrello</h2>
+            <div></div>
+          </app-carello-mini>
+        </li>
+
+        <!-- Preferiti -->
+        <li class="nav-item preferiti-item" style="font-size: 1.5rem">
+          <i class="bi bi-heart"></i>
+        </li>
+
+        <!-- Profilo -->
+        <li class="nav-item profilo-item pe-5" style="font-size: 1.5rem">
+          <i
+            class="bi bi-person-circle"
+            [routerLink]="
+              authService.isAuthenticated() ? '/dashboard' : '/login'
+            "
+          ></i>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

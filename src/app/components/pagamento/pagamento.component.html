@@ -1,0 +1,214 @@
+<div class="container my-4">
+  <!-- Messaggio di successo -->
+  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    {{ successMessage }}
+  </div>
+
+  <!-- Messaggio di errore -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <div class="row">
+    <!-- Colonna Pagamento -->
+    <div class="col-lg-8 col-md-12 mt-3">
+      <h4 class="mb-4 text-center text-lg-start">Pagamento</h4>
+      <p class="text-center text-lg-start">Seleziona il metodo di pagamento</p>
+
+      <div class="mb-5 mt-4 text-center text-lg-start">
+        <form>
+          <div class="form-check">
+            <input
+              type="radio"
+              id="carta"
+              name="paga"
+              (change)="scegliPagamento('carta')"
+            />
+            <label for="carta" class="form-check-label">
+              Carta di credito o di debito
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              type="radio"
+              id="paypal"
+              name="paga"
+              (change)="scegliPagamento('paypal')"
+            />
+            <label for="paypal" class="form-check-label">
+              <i class="bi bi-paypal"></i> PayPal
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              type="radio"
+              id="gpay"
+              name="paga"
+              (change)="scegliPagamento('gpay')"
+            />
+            <label for="gpay" class="form-check-label">
+              <i class="bi bi-google"></i> GPay
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modulo pagamento con carta -->
+      <div *ngIf="pagamentoScelto === 'carta'" class="my-4">
+        <div
+          class="card text-center mx-auto"
+          style="max-width: 100%; width: 500px"
+        >
+          <form [formGroup]="frmPagamento" (ngSubmit)="createOrder()">
+            <div class="row my-4 px-3">
+              <div class="col-12 col-md-4 mb-3">
+                <label for="numeroCarta" class="form-label">Numero Carta</label>
+                <input
+                  formControlName="numeroCarta"
+                  type="text"
+                  id="numeroCarta"
+                  class="form-control"
+                  autocomplete="off"
+                  placeholder="Numero carta"
+                  [ngClass]="{
+                    'is-invalid': numeroCarta?.touched && numeroCarta?.invalid
+                  }"
+                />
+                <div
+                  *ngIf="numeroCarta?.touched && numeroCarta?.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="numeroCarta?.errors?.['required']">
+                    Numero carta necessario.
+                  </div>
+                  <div *ngIf="numeroCarta?.errors?.['pattern']">
+                    Numero carta non è valido.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4 mb-3">
+                <label for="dataScadenza" class="form-label"
+                  >Data di Scadenza</label
+                >
+                <input
+                  type="text"
+                  id="dataScadenza"
+                  class="form-control"
+                  placeholder="MM/AA"
+                  autocomplete="off"
+                  formControlName="dataScadenza"
+                  [ngClass]="{
+                    'is-invalid': dataScadenza?.touched && dataScadenza?.invalid
+                  }"
+                />
+                <div
+                  *ngIf="dataScadenza?.touched && dataScadenza?.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="dataScadenza?.errors?.['required']">
+                    Scadenza carta necessaria.
+                  </div>
+                  <div *ngIf="dataScadenza?.errors?.['pattern']">
+                    Scadenza non è valida.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4 mb-3">
+                <label for="cvv" class="form-label">CVV</label>
+                <input
+                  type="text"
+                  id="cvv"
+                  class="form-control"
+                  autocomplete="off"
+                  placeholder="CVV"
+                  formControlName="cvv"
+                  [ngClass]="{ 'is-invalid': cvv?.touched && cvv?.invalid }"
+                />
+                <div
+                  *ngIf="cvv?.touched && cvv?.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="cvv?.errors?.['required']">
+                    Numero CVV necessario.
+                  </div>
+                  <div *ngIf="cvv?.errors?.['pattern']">
+                    Numero CVV non è valido.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-dark my-4"
+              [disabled]="frmPagamento.invalid"
+              routerLink="/concluso"
+            >
+              Paga
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Pagamento con PayPal -->
+      <div *ngIf="pagamentoScelto === 'paypal'" class="my-5 text-center">
+        <p>
+          Dopo aver confermato l'ordine sarai reindirizzato al sito di PayPal.
+        </p>
+        <button
+          type="button"
+          class="btn btn-dark mt-2"
+          routerLink="/concluso"
+          (click)="createOrder()"
+        >
+          Passa alla verifica dell'ordine
+        </button>
+      </div>
+
+      <!-- Pagamento con GPay -->
+      <div *ngIf="pagamentoScelto === 'gpay'" class="my-5 text-center">
+        <button
+          type="button"
+          class="btn btn-dark mt-2"
+          routerLink="/concluso"
+          (click)="createOrder()"
+        >
+          Passa alla verifica dell'ordine
+        </button>
+      </div>
+    </div>
+
+    <!-- Riepilogo carrello -->
+    <div class="col-lg-4 col-md-12">
+      <h4 class="mb-4 text-center text-lg-start">Nel carrello</h4>
+      <ul class="list-group">
+        <li
+          class="list-group-item border-0"
+          *ngFor="let item of prodottiACarrello"
+        >
+          <div class="d-flex align-items-center">
+            <img
+              [src]="item.prodotto.immagine"
+              class="img-fluid"
+              style="width: 100px; height: 100px"
+            />
+            <div class="ms-3">
+              <h5>{{ item.prodotto.nome }}</h5>
+              <p>Taglia: {{ item.taglia }}</p>
+              <p>Colore: {{ item.colore }}</p>
+              <p>Quantità: {{ item.quantita }}</p>
+              <p>Prezzo: {{ item.prodotto.prezzo | currency : "EUR" }}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div *ngIf="prodottiACarrello.length > 0" class="my-3">
+        <p>Subtotale: {{ totale | currency : "EUR" }}</p>
+        <p>Costi di spedizione: {{ spedizione | currency : "EUR" }}</p>
+        <hr />
+        <p>Totale: {{ totale + spedizione | currency : "EUR" }}</p>
+      </div>
+    </div>
+  </div>
+</div>

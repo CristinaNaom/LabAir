@@ -1,0 +1,26 @@
+.carousel-item {
+    display: none;
+  }
+  
+  .carousel-item.active {
+    display: flex;
+  }
+  
+  .d-flex .d-block.w-33 {
+    width: 33.333%;
+  }
+  img{
+    max-width: 380px;
+    max-height: 380px;
+  }
+ @media screen and (max-width: 768px) {
+  .d-flex .d-block.w-33 {
+    width: 100%;
+  }
+  img{
+    width: 100%;
+    height: auto;
+  }
+ }
+
+  

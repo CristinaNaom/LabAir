@@ -1,0 +1,8 @@
+@media (max-width: 768px) {
+    .card-title {
+      font-size: 3rem;
+    }
+    .card-img {
+      height: 200px;
+    }
+  }

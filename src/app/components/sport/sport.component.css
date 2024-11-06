@@ -1,0 +1,14 @@
+
+.navbar-nav {
+    flex-direction: row;
+  }
+  .nav-item {
+    margin-right: 1rem; /* Spazio tra gli elementi */
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+  }

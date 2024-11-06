@@ -1,0 +1,88 @@
+<div class="container">
+  <div *ngIf="isVisible" class="modal">
+    <!-- Modal Content -->
+    <div class="modal-content">
+      <!-- Close Button -->
+      <span class="close" (click)="close()">&times;</span>
+
+      <!-- Carrello Title -->
+      <h3 class="text-center my-4">Il tuo carrello</h3>
+
+      <div  *ngIf="prodottiACarrello.length > 0; else carrelloVuoto">
+        <!-- Lista dei prodotti nel carrello -->
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let item of prodottiACarrello; let i = index"
+          >
+            <div class="row align-items-center">
+              <!-- Colonna dell'immagine -->
+              <div class="col-4 col-sm-3 col-md-2">
+                <img
+                  [src]="item.prodotto.immagine"
+                  class="img-fluid"
+                  alt="{{ item.prodotto.nome }}"
+                />
+              </div>
+              <!-- Colonna con informazioni prodotto -->
+              <div class="col-8 col-sm-9 col-md-10">
+                <h5>{{ item.prodotto.nome }}</h5>
+                <p>Taglia: {{ item.taglia }}</p>
+                <p>Colore: {{ item.colore }}</p>
+                <p>Prezzo: {{ item.prodotto.prezzo | currency : "EUR"}}</p>
+                <!-- Pulsante rimuovi -->
+                <button class="btn btn-dark" (click)="rimuoviDalCarrello(item)">
+                  <i class="bi bi-trash3"></i>
+                </button>
+                <!-- Select per quantità -->
+                <select
+                  class="form-select d-inline-block w-auto"
+                  style="padding-bottom: 0.6rem"
+                  [(ngModel)]="item.quantita"
+                  (change)="aggiornaQuantita(item)"
+                >
+                  <option *ngFor="let num of getOptions()" [value]="num">
+                    {{ num }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Se ci sono prodotti nel carrello, mostra il totale e i pulsanti -->
+      <div *ngIf="prodottiACarrello.length > 0" class="text-center mt-4">
+        <h4>Totale: €{{ getTotalPrice()}}</h4>
+      </div>
+
+      <!-- Pulsanti azione -->
+      <div class="text-center">
+        <button
+          type="button"
+          class="btn btn-dark mt-3 w-50"
+          routerLink="/carrello"
+          [hidden]="prodottiACarrello.length === 0"
+        >
+          Vai al carrello
+        </button>
+      </div>
+
+      <div class="text-center">
+        <button
+          type="button"
+          class="btn btn-dark my-2 w-50"
+          [routerLink]="
+            authService.isAuthenticated() ? '/pagamento' : '/checkout'
+          "
+          [hidden]="prodottiACarrello.length === 0"
+        >
+          Vai al pagamento
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-template #carrelloVuoto>
+    <p>Nel tuo carrello non sono presenti articoli.</p>
+  </ng-template>
+</div>

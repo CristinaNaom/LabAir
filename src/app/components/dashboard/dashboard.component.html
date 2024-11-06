@@ -1,0 +1,99 @@
+<div class="container mt-5">
+  <!-- Benvenuto -->
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center">Benvenuta, {{ user.lastName }}!</h1>
+    </div>
+  </div>
+
+  <!-- Profilo utente -->
+  <div class="row justify-content-center mb-4">
+    <div class="col-lg-6 col-md-8 col-12">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+          <h4>Il tuo profilo:</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Cognome: </strong> {{ user.firstName }}
+            </li>
+            <li class="list-group-item">
+              <strong>Nome: </strong> {{ user.lastName }}
+            </li>
+            <li class="list-group-item">
+              <strong>Email: </strong> {{ user.email }}
+            </li>
+            <li class="list-group-item">
+              <strong>Indirizzo: </strong> {{ user.address }}
+            </li>
+            <li class="list-group-item">
+              <strong>Telefono: </strong> {{ user.phone }}
+            </li>
+            <li class="list-group-item">
+              <strong>User ID: </strong> {{ user.id }}
+            </li>
+          </ul>
+        </div>
+        <div class="text-center mb-3">
+          <button class="btn btn-dark w-50" (click)="onLogout()">
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sezione ordini -->
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-center">I tuoi ordini</h2>
+      <div *ngIf="ordini.length === 0" class="alert alert-warning text-center">
+        Non hai ancora effettuato ordini.
+      </div>
+      <div *ngIf="ordini.length > 0">
+        <ul class="list-group">
+          <li *ngFor="let ordine of ordini" class="list-group-item mb-3">
+            <h4>Ordine ID: {{ ordine.id }}</h4>
+
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let item of ordine.cartItems">
+                <div class="row align-items-center">
+                  <!-- Colonna dell'immagine -->
+                  <div class="col-4 col-sm-3 col-md-2">
+                    <img
+                      [src]="item.img"
+                      alt="{{ item.nome }}"
+                      class="img-fluid"
+                    />
+                  </div>
+                  <!-- Colonna con informazioni prodotto -->
+                  <div class="col-8 col-sm-9 col-md-10">
+                    <h5>{{ item.nome }}</h5>
+                    <p>Taglia: {{ item.taglia }}</p>
+                    <p>Colore: {{ item.colore }}</p>
+                    <p>Quantità: {{ item.quantity }}</p>
+                    <p>Prezzo: {{ item.prezzo | currency : "EUR" }}</p>
+                    <p>
+                      <strong
+                        >Totale ordine:
+                        {{ item.totale | currency : "EUR" }}</strong
+                      >
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nuovo ordine -->
+  <div class="text-center mt-4">
+    <button class="btn btn-dark w-50 mb-2" routerLink="/prodottiTot">
+      Fai un nuovo ordine
+    </button>
+  </div>
+</div>

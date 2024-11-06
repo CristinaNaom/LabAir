@@ -1,0 +1,30 @@
+<div class="container my-5">
+  <!-- Tabella visibile su schermi medi e grandi -->
+  <div class="d-none d-md-block">
+    <ul class="navbar-nav d-flex justify-content-around">
+      <li class="nav-item" *ngFor="let categoria of categorie" style="font-size: 1.5em">
+        <a class="nav-link link-dark" [routerLink]="['/prodottiCat', categoria.categoria]">
+          {{ categoria.title }}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Dropdown menu visibile su dispositivi mobili -->
+  <div class="d-md-none">
+    <div class="dropdown">
+      <button class="btn btn-dark dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        Seleziona Categoria
+      </button>
+      <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+        <li *ngFor="let categoria of categorie">
+          <a class="dropdown-item" [routerLink]="['/prodottiCat', categoria.categoria]">
+            {{ categoria.title }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <img src="assets/image/homePage/sport.webp" alt="sport" class="img-fluid my-4" />
+</div>

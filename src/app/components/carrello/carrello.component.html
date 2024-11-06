@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <div class="row" *ngIf="prodottiACarrello.length > 0; else carrelloVuoto">
+    <div class="col-12 col-lg-8">
+      <h3>Il tuo carrello</h3>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let item of prodottiACarrello; let i = index"
+        >
+          <div class="d-flex align-items-center">
+            <div class="p-2">
+              <img
+                [src]="item.prodotto.immagine"
+                class="img-fluid"
+                style="width: 100px; height: 100px"
+              />
+            </div>
+            <div class="p-2 text-center">
+              <h5 class="mb-1">{{ item.prodotto.nome }}</h5>
+              <p class="mb-1">Taglia: {{ item.taglia }}</p>
+              <p class="mb-1">Colore: {{ item.colore }}</p>
+              <p class="mb-1">
+                Prezzo: {{ item.prodotto.prezzo | currency : "EUR" }}
+              </p>
+              <button class="btn btn-dark" (click)="rimuoviDaCarrello(item)">
+                <i class="bi bi-trash3"></i>
+              </button>
+              <select
+                class="ms-2"
+                [(ngModel)]="item.quantita"
+                (change)="aggiornaQuantita(item)"
+              >
+                <option *ngFor="let num of getOptions()" [value]="num">
+                  {{ num }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-12 col-lg-4 mt-4 mt-lg-0">
+      <h4 style="font-size: 1.5em">Riepilogo</h4>
+      <p>Subtotale: {{ calcolaTotale() | currency : "EUR" }}</p>
+      <p>Spedizione: {{ spedizione | currency : "EUR" }}</p>
+      <hr />
+      <p>Totale: {{ calcolaTotale() + spedizione | currency : "EUR" }}</p>
+      <div class="text-center">
+        <button
+          class="btn btn-dark w-100 px-2"
+          [routerLink]="
+            authService.isAuthenticated() ? '/pagamento' : '/checkout'
+          "
+        >
+          Vai al pagamento
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #carrelloVuoto>
+    <h3>Carrello</h3>
+    <p>Nel tuo carrello non sono presenti articoli.</p>
+  </ng-template>
+</div>
